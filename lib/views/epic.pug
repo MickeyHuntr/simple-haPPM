@@ -1,0 +1,69 @@
+extends layout
+
+block content
+    section.section
+        .container
+
+            h1.title.has-text-centered
+                | Single Epic View
+
+            .tabs.is-centered
+                ul
+                    a(href='/tasks') Tasks
+                    a(href='/epics')
+                        b Epics
+                    a(href='/sprints') Sprints
+
+            main(container).epics-list
+                div(style='width: 100%; display: flex; padding-bottom: 10px; justify-content: flex-end; align-items: baseline')
+                    div(style='padding: 5px 15px')
+                        a.show-modal(href='#' style='color: inherit')
+                            i.fas.fa-pen-square(style='margin-right: 8px;')
+                            | Edit
+                    div(style='padding: 5px 15px')
+                        a(href=`/epic/${epic.id}/delete` style='color: inherit')
+                            i.fas.fa-trash-alt(style='margin-right: 8px;')
+                            | Delete
+                table.table.is-fullwidth.is-bordered.is-hoverable
+                    tr
+                        th(style='text-align: center') ID
+                        th Name
+                        th Description
+                        th State
+                    include components/epic
+            .modal
+                .modal-background
+                .modal-card
+                    header.modal-card-head
+                        p.modal-card-title Update epic
+                        button.delete(aria-label='close')
+                    section.modal-card-body
+                        form(action=`/epic/${epic.id}` method='POST').record-form#record-form
+                            .field
+                                .control
+                                    input.input(name='name' type='text' placeholder='Name' value=epic.name)
+                            .field
+                                .control
+                                    textarea.textarea(name='description' placeholder='Description')=epic.description
+                            .field
+                                .select
+                                    select(name='state' selected='draft')
+                                        if epic.state = 'draft'
+                                            option(value='draft' selected) Draft
+                                        else
+                                            option(value='draft') Draft
+                                        if epic.state = 'ready'
+                                            option(value='ready' selected) Ready
+                                        else
+                                            option(value='ready') Ready
+                                        if epic.state = 'work_in_progress'
+                                            option(value='work_in_progress' selected) Work in Progress
+                                        else
+                                            option(value='work_in_progress') Work in Progress
+                                        if epic.state = 'completed'
+                                            option(value='completed' selected) Completed
+                                        else
+                                            option(value='completed') Completed
+                            .field
+                                .control
+                                    button.button.is-link Update

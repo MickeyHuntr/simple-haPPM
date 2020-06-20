@@ -1,0 +1,32 @@
+tr
+    td(style='text-align: center')=task.id
+    td
+        a(href=`/task/${task.id}`)=task.name
+    td=task.description
+    td=task.acceptance_criteria
+    td(style='')
+        if task.state === 'draft'
+            i.fas.fa-drafting-compass(style='margin-right: 10px; color: #919191')
+            span Draft
+        if task.state === 'open'
+            i.fas.fa-circle(style='margin-right: 10px; color: #919191')
+            span Open
+        if task.state === 'work_in_progress'
+            i.fas.fa-dot-circle(style='margin-right: 10px; color: #55e65c')
+            span Work in Progress
+        if task.state === 'ready_for_testing'
+            i.fas.fa-dot-circle(style='margin-right: 10px; color: #F5CB5C')
+            span Ready for Testing
+        if task.state === 'testing'
+            i.fas.fa-dot-circle(style='margin-right: 10px; color: #bb55e6')
+            span Testing
+        if task.state === 'completed'
+            i.fas.fa-check-circle(style='margin-right: 10px; color: #55b1e6')
+            span Completed
+    td=task.points
+    td
+        if task.epic != null
+            a(href=`/epic/${task.epic.id}`)=task.epic.name
+    td
+        if task.sprint != null
+            a(href=`/sprint/${task.sprint.id}`)=task.sprint.name

@@ -1,0 +1,73 @@
+extends layout
+
+block content
+    section.section
+        .container
+
+            h1.title.has-text-centered
+                | Single Sprint View
+
+            .tabs.is-centered
+                ul
+                    a(href='/tasks') Tasks
+                    a(href='/epics') Epics
+                    a(href='/sprints')
+                        b Sprints
+
+            main(container).sprints-list
+                div(style='width: 100%; display: flex; padding-bottom: 10px; justify-content: flex-end; align-items: baseline')
+                    div(style='padding: 5px 15px')
+                        a.show-modal(href='#' style='color: inherit')
+                            i.fas.fa-pen-square(style='margin-right: 8px;')
+                            | Edit
+                    div(style='padding: 5px 15px')
+                        a(href=`/sprint/${sprint.id}/delete` style='color: inherit')
+                            i.fas.fa-trash-alt(style='margin-right: 8px;')
+                            | Delete
+                table.table.is-fullwidth.is-bordered.is-hoverable
+                    tr
+                        th(style='text-align: center') ID
+                        th Name
+                        th Start Date
+                        th End Date
+                        th State
+                    include components/sprint
+            .modal
+                .modal-background
+                .modal-card
+                    header.modal-card-head
+                        p.modal-card-title Update sprint
+                        button.delete(aria-label='close')
+                    section.modal-card-body
+                        form(action=`/sprint/${sprint.id}` method='POST').record-form#record-form
+                            .field
+                                .control
+                                    input.input(name='name' type='text' placeholder='Name' value=sprint.name)
+                            .field
+                                .control
+                                    input.input(name='start_date' type='date' placeholder='Start Date' value=sprint.start_date)
+                            .field
+                                .control
+                                    input.input(name='end_date' type='date' placeholder='End Date' value=sprint.end_date)
+                            .field
+                                .select
+                                    select(name='state' selected='draft')
+                                        if sprint.state = 'draft'
+                                            option(value='draft' selected) Draft
+                                        else
+                                            option(value='draft') Draft
+                                        if sprint.state = 'ready'
+                                            option(value='ready' selected) Ready
+                                        else
+                                            option(value='ready') Ready
+                                        if sprint.state = 'work_in_progress'
+                                            option(value='work_in_progress' selected) Work in Progress
+                                        else
+                                            option(value='work_in_progress') Work in Progress
+                                        if sprint.state = 'completed'
+                                            option(value='completed' selected) Completed
+                                        else
+                                            option(value='completed') Completed
+                            .field
+                                .control
+                                    button.button.is-link Update

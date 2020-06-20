@@ -1,0 +1,22 @@
+{
+  "name": "simple-happm",
+  "version": "1.0.0",
+  "description": "Simple ppm project built with happi",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "mickeyhuntr",
+  "license": "GNU",
+  "dependencies": {
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/inert": "^6.0.1",
+    "@hapi/vision": "^6.0.0",
+    "dotenv": "^8.2.0",
+    "moment": "^2.27.0",
+    "pug": "^3.0.0",
+    "sequelize": "^5.21.13",
+    "sqlite3": "^4.2.0"
+  }
+}

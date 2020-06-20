@@ -1,0 +1,59 @@
+extends layout
+
+block content
+    section.section
+        .container
+
+            h1.title.has-text-centered
+                | All Epics
+
+            .tabs.is-centered
+                ul
+                    a(href='/tasks') Tasks
+                    a(href='/epics') Epics
+                    a(href='/sprints')
+                        b Sprints
+
+            main(container).epics-list
+                div(style='width: 100%; text-align: right; padding-bottom: 10px')
+                    div(style='width: 100%; display: flex; padding-bottom: 10px; justify-content: flex-end; align-items: baseline')
+                        div(style='padding: 5px 15px')
+                            a.show-modal(href='#' style='color: inherit')
+                                i.fas.fa-plus-square(style='margin-right: 8px;')
+                                | Create new
+                table.table.is-fullwidth.is-bordered.is-hoverable
+                    tr
+                        th(style='text-align: center') ID
+                        th Name
+                        th Start Date
+                        th End Date
+                        th State
+                    each sprint in data.sprints
+                        include components/sprint
+            .modal
+                .modal-background
+                .modal-card
+                    header.modal-card-head
+                        p.modal-card-title Create new sprint
+                        button.delete(aria-label='close')
+                    section.modal-card-body
+                        form(action=`/sprint` method='POST').record-form#record-form
+                            .field
+                                .control
+                                    input.input(name='name' type='text' placeholder='Name')
+                            .field
+                                .control
+                                    input.input(name='start_date' type='date' placeholder='Start Date')
+                            .field
+                                .control
+                                    input.input(name='end_date' type='date' placeholder='End Date')
+                            .field
+                                .select
+                                    select(name='state' selected='draft')
+                                        option(value='draft') Draft
+                                        option(value='ready') Ready
+                                        option(value='work_in_progress') Work in Progress
+                                        option(value='completed') Completed
+                            .field
+                                .control
+                                    button.button.is-link Create

@@ -1,0 +1,19 @@
+tr
+    td(style='text-align: center')=sprint.id
+    td
+        a(href=`/sprint/${sprint.id}`)=sprint.name
+    td=sprint.start_date
+    td=sprint.end_date
+    td
+        if sprint.state === 'draft'
+            i.fas.fa-drafting-compass(style='margin-right: 10px; color: #919191')
+            span Draft
+        if sprint.state === 'ready'
+            i.fas.fa-circle(style='margin-right: 10px; color: #919191')
+            span Ready
+        if sprint.state === 'work_in_progress'
+            i.fas.fa-dot-circle(style='margin-right: 10px; color: #55e65c')
+            span Work in Progress
+        if sprint.state === 'completed'
+            i.fas.fa-check-circle(style='margin-right: 10px; color: #55b1e6')
+            span Completed

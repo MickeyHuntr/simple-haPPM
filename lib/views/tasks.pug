@@ -1,0 +1,74 @@
+extends layout
+
+block content
+    section.section
+        .container
+
+            h1.title.has-text-centered
+                | All Tasks
+
+            .tabs.is-centered
+                ul
+                    a(href='/tasks')
+                        b Tasks
+                    a(href='/epics') Epics
+                    a(href='/sprints') Sprints
+
+            main(container)
+                div(style='width: 100%; text-align: right; padding-bottom: 10px')
+                    div(style='width: 100%; display: flex; padding-bottom: 10px; justify-content: flex-end; align-items: baseline')
+                        div(style='padding: 5px 15px')
+                            a.show-modal(href='#' style='color: inherit')
+                                i.fas.fa-plus-square(style='margin-right: 8px;')
+                                | Create new
+                table.table.is-fullwidth.is-bordered.is-hoverable
+                    tr
+                        th(style='text-align: center') ID
+                        th Name
+                        th Description
+                        th Acceptance Criteria
+                        th State
+                        th Points
+                        th Epic
+                        th Sprint
+                    .record-list
+                        each task in data.tasks
+                            include components/task
+            .modal
+                .modal-background
+                .modal-card
+                    header.modal-card-head
+                        p.modal-card-title Create new task
+                        button.delete(aria-label='close')
+                    section.modal-card-body
+                        form(action=`/task` method='POST').record-form#record-form
+                            .field
+                                .control
+                                    input.input(name='name' type='text' placeholder='Name')
+                            .field
+                                .control
+                                    textarea.textarea(name='description' placeholder='Description')
+                            .field
+                                .control
+                                    textarea.textarea(name='acceptance_criteria' placeholder='Acceptance Criteria')
+                            .field
+                                .select
+                                    select(name='state' selected='draft')
+                                        option(value='draft') Draft
+                                        option(value='open') Open
+                                        option(value='work_in_progress') Work in Progress
+                                        option(value='ready_for_testing') Ready for Testing
+                                        option(value='testing') Testing
+                                        option(value='completed') Completed
+                            .field
+                                .control
+                                    input.input(name='points' type='number' placeholder='0')
+                            .field
+                                .control
+                                    input.input(name='epic' type='number' placeholder='Epic ID')
+                            .field
+                                .control
+                                    input.input(name='sprint' type='number' placeholder='Sprint ID')
+                            .field
+                                .control
+                                    button.button.is-link Create
